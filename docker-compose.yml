@@ -4,7 +4,6 @@ services:
  ci:
   #build: .
   image: deviny/jenkins:7.1.10
-  #image: jenkins/jenkins:lts 
   dns: 8.8.8.8
   ports:
       - "8080:8080"
