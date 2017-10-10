@@ -1,0 +1,3 @@
+*.swp
+!/var/jenkins_home/workspace
+/var/jenkins_home

@@ -1,0 +1,9 @@
+scm-api:latest
+workflow-scm-step:latest
+credentials:latest
+ssh-credentials:latest
+structs:latest
+git-client:latest
+git:latest
+greenballs:latest
+oauth-credentials:latest
