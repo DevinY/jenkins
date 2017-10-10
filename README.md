@@ -12,7 +12,9 @@
 docker-compose up -d
 
 
-第一次執行時，需有安裝密碼，可透過logs查看。
+第一次執行時，後，開啟localhost:8080
+會看見需要一組Unlock Jenkins的啟用密碼，可透過logs查看
+如果是加入-d參數，我們可以用查看。
 
 docker-compose logs ci
 
