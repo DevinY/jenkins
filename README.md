@@ -1,20 +1,19 @@
 # D-Laravel jenkins image
 
-可以給D-Laravel一起使用的jenkins image.
-
-第一次執行，您可透過make_ci_workspace.sh建立，jenkins的工作目錄
-
-
 執行:
 docker-compose up -d
 
-第一次執行時，後，開啟localhost:8080
-會看見需要一組Unlock Jenkins的啟用密碼，可透過logs查看
-如果是加入-d參數，我們可以用查看。
+第一次執行啟動後，開啟localhost:8080
 
-docker-compose logs ci
+會看見需要一組Unlock Jenkins的解鎖密碼，可透過docker-compose logs查看
 
-如需資料庫等，建議可使用D-Laravel的架構進行。
 
-自己build imges時，用來更新jenkins/jenkins:lts版本。
+其他: 
+
+deviny/jenkins:7.1.10的Dockerfile使用官方(jenkins/jinkins:lts)的長期支援版本，
+如果已pull過官方的，jenkins/jenkins:lts版本。
+再重build時，請先重新pull最新版的jenkins/jenkins:lts版本。
+
+可用如下指令重新pull
 update.sh
+
