@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 RUN apt-get update \
-      && apt-get install -y sudo rsync wget build-essential
+      && apt-get install -y sudo rsync build-essential
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
         sudo \
         cron \
         git \
+        wget \
         python \
         vim \
         unzip \
