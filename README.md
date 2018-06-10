@@ -5,7 +5,10 @@ docker-compose up -d
 
 第一次執行啟動後，開啟localhost:8080
 
-會看見需要一組Unlock Jenkins的解鎖密碼，可透過docker-compose logs查看
+會看見需要一組Unlock Jenkins的解鎖密碼，可透過下方指令查看。
+<pre>
+docker-compose logs -f
+</pre>
 
 
 其他: 
@@ -15,5 +18,6 @@ deviny/jenkins:7.1.10的Dockerfile使用官方(jenkins/jinkins:lts)的長期支�
 再重build時，請先重新pull最新版的jenkins/jenkins:lts版本。
 
 可用如下指令重新pull
+
 update.sh
 
