@@ -5,5 +5,7 @@ ssh-credentials:latest
 structs:latest
 git-client:latest
 git:latest
-greenballs:latest
 oauth-credentials:latest
+pipeline-stage-view:2.33
+pipeline-stage-step:305.ve96d0205c1c6
+pipeline-model-definition:2.2144.v077a_d1928a_40

@@ -2,8 +2,8 @@ version: '3'
 services:
 ### 網頁伺服器的container ##################################
  ci:
-  #build: .
-  image: deviny/jenkins-php:7.2.6
+  build: .
+  image: jenkins-php:8.2.10
   dns: 8.8.8.8
   ports:
       - "8080:8080"

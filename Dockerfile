@@ -29,17 +29,20 @@ RUN apt-get update && apt-get install -y \
     cron \
     git \
     wget \
-    python \
+    python3 \
     vim \
     unzip \
-    mysql-client \
+    php-pear \
+    default-mysql-client \
     zip \
     libbz2-dev \
-    libgd2-dev \
+    libgd-dev \
     libpng-dev \
     libjpeg-dev \
     libgif-dev \
+    libonig-dev \
     supervisor \
+    bash \
     --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 ENV PHP_INI_DIR /usr/local/etc/php
@@ -55,11 +58,14 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F 
+#https://www.php.net/gpg-keys.php
+ENV GPG_KEYS 39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 
 
-ENV PHP_VERSION 7.2.6
-ENV PHP_URL="https://secure.php.net/get/php-7.2.6.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.2.6.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="1f004e049788a3effc89ef417f06a6cf704c95ae2a718b2175185f2983381ae7" PHP_MD5=""
+ENV PHP_VERSION 8.2.10
+#https://www.php.net/downloads
+ENV PHP_URL="https://www.php.net/distributions/php-8.2.10.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-8.2.10.tar.xz.asc"
+
+ENV PHP_SHA256="561dc4acd5386e47f25be76f2c8df6ae854756469159248313bcf276e282fbb3" PHP_MD5=""
 
 RUN set -xe; \
 \
@@ -71,6 +77,7 @@ gnupg2 \
 "; \
 fi; \
 apt-get update; \
+apt-key update; \
 apt-get install -y --no-install-recommends $fetchDeps; \
 rm -rf /var/lib/apt/lists/*; \
 \
@@ -89,10 +96,10 @@ fi; \
 if [ -n "$PHP_ASC_URL" ]; then \
 wget -O php.tar.xz.asc "$PHP_ASC_URL"; \
 export GNUPGHOME="$(mktemp -d)"; \
-for key in $GPG_KEYS; do \
-gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-done; \
-gpg --batch --verify php.tar.xz.asc php.tar.xz; \
+#for key in $GPG_KEYS; do \
+#gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$key"; \
+#done; \
+#gpg --batch --verify php.tar.xz.asc php.tar.xz; \
 rm -rf "$GNUPGHOME"; \
 fi; \
 \
@@ -195,5 +202,7 @@ RUN  rm -rf /var/lib/apt/lists/*
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 USER jenkins
-COPY plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+
+RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt && \
+echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
